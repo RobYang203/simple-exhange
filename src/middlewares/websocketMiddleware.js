@@ -64,8 +64,8 @@ export default function websocketMiddleware(store) {
 
       switch (type) {
         case actionTypes.WS_SYMBOL_CHANGE:
-          const { nowSymbol } = market;
-          changeSymbol(nowSymbol, payload.symbol);
+          const { currentSymbol } = market;
+          changeSymbol(currentSymbol, payload.symbol);
           break;
         default:
           break;
