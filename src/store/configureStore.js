@@ -1,11 +1,12 @@
 import {
   startFetchingMiddleware,
   stopFetchingMiddleware,
-} from "middlewares/fetchingMiddleware";
-import { compose, createStore, applyMiddleware } from "redux";
-import createSagaMiddleware from "redux-saga";
-import rootReducer from "reducers";
-import rootSaga from "sagas";
+} from 'middlewares/fetchingMiddleware';
+import websocketMiddleware from 'middlewares/websocketMiddleware';
+import { compose, createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer from 'reducers';
+import rootSaga from 'sagas';
 
 function configureStore() {
   const sagaMiddleware = createSagaMiddleware({});
@@ -17,6 +18,7 @@ function configureStore() {
     startFetchingMiddleware,
     sagaMiddleware,
     stopFetchingMiddleware,
+    websocketMiddleware,
   ];
 
   const preventStore = createStore(
@@ -25,8 +27,8 @@ function configureStore() {
   );
 
   if (module.hot) {
-    module.hot.accept("../reducers/index", () => {
-      const nextRootReducer = require("../reducers/index");
+    module.hot.accept('../reducers/index', () => {
+      const nextRootReducer = require('../reducers/index');
       preventStore.replaceReducer(nextRootReducer);
     });
   }

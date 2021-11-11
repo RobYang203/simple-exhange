@@ -6,9 +6,7 @@ import { ThemeProvider } from '@material-ui/core';
 import store from 'store/configureStore';
 import theme from 'theme';
 import App from './App';
-import createWS from './ws';
 
-createWS();
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>

@@ -26,8 +26,6 @@ let _statusEvents = {
   [ERROR]: null,
 };
 
-const subscribeChannels = new Map();
-
 const connectingInfo = {
   queue: [],
   count: 0,
@@ -161,7 +159,7 @@ function close() {
   }
 }
 
-export function sendMsg(payload) {
+export function sendWebsocketMessage(payload) {
   const json = JSON.stringify(payload);
 
   try {
@@ -205,7 +203,7 @@ export default function createWebsocketControl(
     start,
     close,
     reconnect,
-    sendMsg,
     setOnReceivedMessage,
+    sendMsg: sendWebsocketMessage,
   };
 }
