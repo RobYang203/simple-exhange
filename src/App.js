@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline } from "@material-ui/core";
+import LoadingMask from "components/LoadingMask";
+import MainLayout from "layouts/MainLayout";
+import HistoryPage from "pages/HistoryPage";
+import MainPage from "pages/MainPage";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CssBaseline/>
+      <MainLayout>
+        <Switch>
+          <Route path="/" component={MainPage} />
+          <Route path="/history" component={HistoryPage} />
+        </Switch>
+      </MainLayout>
+      <LoadingMask/>
     </div>
   );
 }
