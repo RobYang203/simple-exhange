@@ -17,7 +17,6 @@ function App() {
       <MainLayout>
         <Switch>
           <Route path='/' component={MainPage} />
-          <Route path='/history' component={HistoryPage} />
         </Switch>
       </MainLayout>
       <LoadingMask />

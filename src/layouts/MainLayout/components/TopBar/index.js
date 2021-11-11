@@ -51,8 +51,8 @@ function TopBar() {
     <AppBar className={classes.root} position={'static'}>
       <Toolbar>
         <Typography className={classes.title}>
-          {`${currentSymbol?.baseAsset ?? ''}/${
-            currentSymbol?.quoteAsset ?? ''
+          {`${currentSymbol?.baseAsset ?? '----'} / ${
+            currentSymbol?.quoteAsset ?? '----'
           }`}
         </Typography>
         <div>
