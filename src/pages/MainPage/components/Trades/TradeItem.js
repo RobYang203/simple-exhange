@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function TrendItem({ time, price, quantity }) {
+function TradeItem({ time, price, quantity }) {
   const classes = useStyles();
 
   return (
@@ -30,10 +30,10 @@ function TrendItem({ time, price, quantity }) {
   );
 }
 
-TrendItem.propTypes = {
+TradeItem.propTypes = {
   time: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   quantity: PropTypes.number.isRequired,
 };
 
-export default TrendItem;
+export default TradeItem;

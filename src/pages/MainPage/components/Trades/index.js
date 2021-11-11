@@ -8,8 +8,8 @@ import {
   List,
   makeStyles,
 } from '@material-ui/core';
-import DepthTitle from './TrendTitle';
-import DepthItem from './TrendItem';
+import TradeTitle from './TradeTitle';
+import TradeItem from './TradeItem';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -19,18 +19,18 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function TrendBox() {
+function TradeBox() {
   const classes = useStyles();
   return (
     <Card>
-      <CardHeader title='Trend' />
+      <CardHeader title='Trade' />
       <CardContent>
         <Grid container direction='column'>
-          <DepthTitle leftText='Time' centerText='Price' rightText='Quantity' />
+          <TradeTitle leftText='Time' centerText='Price' rightText='Quantity' />
           <Divider />
           <List className={classes.list}>
-            <DepthItem leftText='Price' rightText='Quantity' />
-            <DepthItem leftText='Price' rightText='Quantity' />
+            <TradeItem leftText='Price' rightText='Quantity' />
+            <TradeItem leftText='Price' rightText='Quantity' />
           </List>
         </Grid>
       </CardContent>
@@ -38,4 +38,4 @@ function TrendBox() {
   );
 }
 
-export default TrendBox;
+export default TradeBox;

@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function TrendTitle({ rightText, centerText, leftText }) {
+function TradeTitle({ rightText, centerText, leftText }) {
   const classes = useStyles();
 
   return (
@@ -30,10 +30,10 @@ function TrendTitle({ rightText, centerText, leftText }) {
   );
 }
 
-TrendTitle.propTypes = {
+TradeTitle.propTypes = {
   rightText: PropTypes.string.isRequired,
   centerText: PropTypes.string.isRequired,
   leftText: PropTypes.string.isRequired,
 };
 
-export default TrendTitle;
+export default TradeTitle;

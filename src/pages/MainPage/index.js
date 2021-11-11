@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import DepthBox from './components/Depth';
-import TrendBox from './components/Trend';
+import TradesBox from './components/Trades';
 
 function MainPage() {
   return (
@@ -10,7 +10,7 @@ function MainPage() {
         <DepthBox />
       </Grid>
       <Grid item xs={12} md={6}>
-        <TrendBox />
+        <TradesBox />
       </Grid>
     </Grid>
   );
