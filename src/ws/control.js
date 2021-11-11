@@ -16,7 +16,7 @@ let currentStatus = null;
 let onStatusChange = null;
 let onReceiveMessage = null;
 
-let _trackStatusEvents = {
+let _statusEvents = {
   [STANDBY]: null,
   [CONNECTING]: null,
   [CONNECTED]: null,
@@ -40,7 +40,7 @@ function settingStatusChange(status, payload = null) {
 
   currentStatus = status;
 
-  const statusEvent = _trackStatusEvents[status];
+  const statusEvent = _statusEvents[status];
 
   if (statusEvent) statusEvent(payload);
 }
@@ -90,16 +90,8 @@ function onMessage(e) {
 
   try {
     const msg = JSON.parse(e.data);
-    const channel = msg.e;
 
-    if (!Boolean(channel) || !subscribeChannels.has(channel)) return;
-    console.log(
-      '🚀 ~ file: control.js ~ line 96 ~ onMessage ~ subscribeChannels',
-      subscribeChannels
-    );
-
-    const event = new CustomEvent(channel, { detail: msg });
-    _wsInstance.dispatchEvent(event);
+    if (typeof onReceiveMessage === 'function') onReceiveMessage(msg);
   } catch (e) {
     settingStatusChange(ERROR, e);
   }
@@ -183,53 +175,25 @@ export function setOnStatusChange(event) {
   onStatusChange = event;
 }
 
+export function setOnReceivedMessage(event) {
+  onReceiveMessage = event;
+}
+
 export function getWSInstance() {
   return _wsInstance;
 }
 
-export function subscribeChannelMessage(channel, handler) {
-  if (!Boolean(channel) || typeof handler !== 'function') return;
-
-  if (!subscribeChannels.has(channel)) {
-    subscribeChannels.set(channel, 0);
-  }
-
-  const subscribeEventCount = subscribeChannels.get(channel);
-  subscribeChannels.set(channel, subscribeEventCount + 1);
-
-  _wsInstance.addEventListener(channel, handler);
-}
-
-export function unsubscribeChannelMessage(channel, handler) {
-  if (
-    !Boolean(channel) ||
-    typeof handler !== 'function' ||
-    !subscribeChannels.has(channel)
-  )
-    return;
-
-  _wsInstance.removeEventListener(channel, handler);
-
-  const subscribeEventCount = subscribeChannels.get(channel);
-
-  if (subscribeEventCount === 1) {
-    subscribeChannels.delete(channel);
-  } else {
-    subscribeChannels.set(channel, subscribeEventCount - 1);
-  }
-}
-
 export default function createWebsocketControl(
   path,
-  trackStatusEvents,
+  statusEvents,
   connectingIntervalTime
 ) {
   _path = path;
 
-  if (typeof trackStatusEvents === 'object') {
-    _trackStatusEvents = {
-      ..._trackStatusEvents,
-      ...trackStatusEvents,
+  if (typeof statusEvents === 'object') {
+    _statusEvents = {
+      ..._statusEvents,
+      ...statusEvents,
     };
   }
 
@@ -242,7 +206,6 @@ export default function createWebsocketControl(
     close,
     reconnect,
     sendMsg,
-    subscribeChannelMessage,
-    unsubscribeChannelMessage,
+    setOnReceivedMessage,
   };
 }

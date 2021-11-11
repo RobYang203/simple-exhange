@@ -15,7 +15,7 @@ const connected = (wsc) => {
   console.log('🚀 ~ file: index.js ~ line 33 ~ connected ~ wsc', wsc);
   _wsc.sendMsg({
     method: 'SUBSCRIBE',
-    params: ['btcusdt@aggTrade', 'btcusdt@depth'],
+    params: ['btcusdt@aggTrade', 'btcusdt@depth20'],
     id: 1,
   });
 };
