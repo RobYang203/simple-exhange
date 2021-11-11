@@ -41,9 +41,14 @@ const createUnsubscribeSymbolMessage = (symbol) => {
 
 const changeSymbol = (originSymbol, nextSymbol) => {
   if (originSymbol)
-    sendWebsocketMessage(createUnsubscribeSymbolMessage(originSymbol));
+    sendWebsocketMessage(
+      createUnsubscribeSymbolMessage(originSymbol.toLocaleLowerCase())
+    );
 
-  sendWebsocketMessage(createSubscribeSymbolMessage(nextSymbol));
+  if (nextSymbol)
+    sendWebsocketMessage(
+      createSubscribeSymbolMessage(nextSymbol.toLocaleLowerCase())
+    );
 };
 
 export default function websocketMiddleware(store) {
@@ -65,7 +70,7 @@ export default function websocketMiddleware(store) {
       switch (type) {
         case actionTypes.WS_SYMBOL_CHANGE:
           const { currentSymbol } = market;
-          changeSymbol(currentSymbol, payload.symbol);
+          changeSymbol(currentSymbol?.symbol, payload?.symbol);
           break;
         default:
           break;

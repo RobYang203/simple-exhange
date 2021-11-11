@@ -16,8 +16,10 @@ export const startFetchingMiddleware = (store) => (next) => (action) => {
 
 export const stopFetchingMiddleware = (store) => (next) => (action) => {
   const isResponseAction = responseRegExp.test(action.type);
+
   const basicType = action.type.replace(responseRegExp, '');
   const isBasicAsyncAction = basicAsyncActionTypes.includes(basicType);
+
   if (isBasicAsyncAction && isResponseAction) {
     store.dispatch(stopFetchingAction(basicType));
   }
