@@ -26,7 +26,7 @@ let _trackStatusEvents = {
   [ERROR]: null,
 };
 
-const handlers = [];
+const subscribeChannels = new Map();
 
 const connectingInfo = {
   queue: [],
@@ -87,9 +87,22 @@ function onOpen() {
 
 function onMessage(e) {
   checkConnect();
-  const msg = JSON.parse(e.data);
 
-  if (onReceiveMessage) onReceiveMessage(msg);
+  try {
+    const msg = JSON.parse(e.data);
+    const channel = msg.e;
+
+    if (!Boolean(channel) || !subscribeChannels.has(channel)) return;
+    console.log(
+      '🚀 ~ file: control.js ~ line 96 ~ onMessage ~ subscribeChannels',
+      subscribeChannels
+    );
+
+    const event = new CustomEvent(channel, { detail: msg });
+    _wsInstance.dispatchEvent(event);
+  } catch (e) {
+    settingStatusChange(ERROR, e);
+  }
 }
 
 function onClose(e) {
@@ -170,17 +183,41 @@ export function setOnStatusChange(event) {
   onStatusChange = event;
 }
 
-export function setOnReceivedMsg(event) {
-  onReceiveMessage = event;
-}
-
 export function getWSInstance() {
   return _wsInstance;
 }
 
-export function subscribeChannel(channel, handler) {}
+export function subscribeChannelMessage(channel, handler) {
+  if (!Boolean(channel) || typeof handler !== 'function') return;
 
-export function unsubscribeChannel(channel) {}
+  if (!subscribeChannels.has(channel)) {
+    subscribeChannels.set(channel, 0);
+  }
+
+  const subscribeEventCount = subscribeChannels.get(channel);
+  subscribeChannels.set(channel, subscribeEventCount + 1);
+
+  _wsInstance.addEventListener(channel, handler);
+}
+
+export function unsubscribeChannelMessage(channel, handler) {
+  if (
+    !Boolean(channel) ||
+    typeof handler !== 'function' ||
+    !subscribeChannels.has(channel)
+  )
+    return;
+
+  _wsInstance.removeEventListener(channel, handler);
+
+  const subscribeEventCount = subscribeChannels.get(channel);
+
+  if (subscribeEventCount === 1) {
+    subscribeChannels.delete(channel);
+  } else {
+    subscribeChannels.set(channel, subscribeEventCount - 1);
+  }
+}
 
 export default function createWebsocketControl(
   path,
@@ -204,6 +241,8 @@ export default function createWebsocketControl(
     start,
     close,
     reconnect,
-    setOnStatusChange,
+    sendMsg,
+    subscribeChannelMessage,
+    unsubscribeChannelMessage,
   };
 }

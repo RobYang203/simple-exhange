@@ -13,6 +13,11 @@ const connecting = (count) => {
 
 const connected = (wsc) => {
   console.log('🚀 ~ file: index.js ~ line 33 ~ connected ~ wsc', wsc);
+  _wsc.sendMsg({
+    method: 'SUBSCRIBE',
+    params: ['btcusdt@aggTrade', 'btcusdt@depth'],
+    id: 1,
+  });
 };
 
 const disconnecting = (wsc) => {
@@ -31,8 +36,8 @@ const error = (wsc, e) => {
   console.log('🚀 ~ file: index.js ~ line 53 ~ error ~ wsc', wsc, e);
 };
 
-const onStatusChange = (current, next) => {
-  console.log('current:', current, '=>', 'next:', next);
+const onStatusChange = (msg) => {
+  console.log(msg);
 };
 
 export default function createWS() {
@@ -48,5 +53,7 @@ export default function createWS() {
 
   _wsc.start();
 
-  _wsc.setOnStatusChange(onStatusChange);
+  // _wsc.subscribeChannelMessage('depthUpdate', onStatusChange);
+  // _wsc.subscribeChannelMessage('aggTrade', onStatusChange);
+  // _wsc.unsubscribeChannelMessage('depthUpdate', onStatusChange);
 }
