@@ -2,7 +2,7 @@ import constants from 'flux-constants';
 
 export const syncActionTypes = ['START_FETCHING', 'STOP_FETCHING'];
 
-export const basicAsyncActionTypes = [];
+export const basicAsyncActionTypes = ['GET_EXCHANGE_INFO'];
 
 export const websocketActionTypes = [
   'WS_STATUS_READY',
