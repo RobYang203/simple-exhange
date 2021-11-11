@@ -9,7 +9,7 @@ export const websocketActionTypes = [
   'WS_STATUS_ERROR',
   'WS_STATUS_CLOSE',
   'WS_SYMBOL_CHANGE',
-  'WS_AGGREGATE',
+  'WS_INSERT_TRADE',
   'WS_DEPTH',
 ];
 

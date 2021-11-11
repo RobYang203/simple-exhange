@@ -18,8 +18,8 @@ export const setWsSymbolChangeAction = (payload) => ({
   payload,
 });
 
-export const refreshWsTradeAction = (payload) => ({
-  type: types.WS_AGGREGATE,
+export const insertWsTradeAction = (payload) => ({
+  type: types.WS_INSERT_TRADE,
   payload,
 });
 

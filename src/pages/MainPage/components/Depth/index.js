@@ -13,6 +13,7 @@ import DepthTitle from './DepthTitle';
 import DepthItem from './DepthItem';
 import cls from 'classnames';
 import { useSelector } from 'react-redux';
+import { orderBy } from 'lodash';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -46,8 +47,10 @@ function DepthBox() {
           <DepthTitle leftText='Price' rightText='Quantity' />
           <Divider />
           <List className={classes.list}>
-            {asks.map((ask) => {
-              return <DepthItem price={ask[0]} quantity={ask[1]} />;
+            {orderBy(asks, 0, 'desc').map((ask) => {
+              return (
+                <DepthItem key={ask[0]} price={ask[0]} quantity={ask[1]} />
+              );
             })}
           </List>
           <div className={classes.dividerMark}>
@@ -58,8 +61,10 @@ function DepthBox() {
             <Typography className={classes.mark}>Bid</Typography>
           </div>
           <List className={classes.list}>
-            {bids.map((bid) => {
-              return <DepthItem price={bid[0]} quantity={bid[1]} />;
+            {orderBy(bids, 0, 'desc').map((bid) => {
+              return (
+                <DepthItem key={bid[0]} price={bid[0]} quantity={bid[1]} />
+              );
             })}
           </List>
         </Grid>

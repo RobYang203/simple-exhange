@@ -1,5 +1,5 @@
 import {
-  refreshWsTradeAction,
+  insertWsTradeAction,
   refreshWsDepthAction,
   setWsStatusReadyAction,
 } from 'actionCreators/websocketAction';
@@ -17,7 +17,7 @@ const onConnected = (store) => () => {
 const handleReceivedMessage = (store) => (msg) => {
   if (msg.id) return;
   if (msg.e === 'aggTrade') {
-    store.dispatch(refreshWsTradeAction(msg));
+    store.dispatch(insertWsTradeAction(msg));
   } else {
     store.dispatch(refreshWsDepthAction(msg));
   }
@@ -26,7 +26,7 @@ const handleReceivedMessage = (store) => (msg) => {
 const createSubscribeSymbolMessage = (symbol) => {
   return {
     method: 'SUBSCRIBE',
-    params: [`${symbol}@aggTrade`, `${symbol}@depth20`],
+    params: [`${symbol}@aggTrade`, `${symbol}@depth10`],
     id: messageId,
   };
 };
@@ -34,7 +34,7 @@ const createSubscribeSymbolMessage = (symbol) => {
 const createUnsubscribeSymbolMessage = (symbol) => {
   return {
     method: 'UNSUBSCRIBE',
-    params: [`${symbol}@aggTrade`, `${symbol}@depth20`],
+    params: [`${symbol}@aggTrade`, `${symbol}@depth10`],
     id: messageId,
   };
 };

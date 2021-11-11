@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import TradeTitle from './TradeTitle';
 import TradeItem from './TradeItem';
+import { useSelector } from 'react-redux';
+import format from 'date-fns/format';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => {
 
 function TradeBox() {
   const classes = useStyles();
+  const trades = useSelector(({ market }) => market.trades);
   return (
     <Card>
       <CardHeader title='Trade' />
@@ -29,8 +32,15 @@ function TradeBox() {
           <TradeTitle leftText='Time' centerText='Price' rightText='Quantity' />
           <Divider />
           <List className={classes.list}>
-            <TradeItem leftText='Price' rightText='Quantity' />
-            <TradeItem leftText='Price' rightText='Quantity' />
+            {trades.map((trade) => {
+              return (
+                <TradeItem
+                  price={trade.p}
+                  time={format(new Date(trade.T), 'hh:mm:ss.SS')}
+                  quantity={trade.q}
+                />
+              );
+            })}
           </List>
         </Grid>
       </CardContent>

@@ -6,5 +6,8 @@ export const marketState = {
   symbols: [],
   currentSymbol: null,
   trades: [],
-  depths: null,
+  depths: {
+    asks: [],
+    bids: [],
+  },
 };
