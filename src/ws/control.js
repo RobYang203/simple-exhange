@@ -203,6 +203,7 @@ export default function createWebsocketControl(
     start,
     close,
     reconnect,
+    setOnStatusChange,
     setOnReceivedMessage,
     sendMsg: sendWebsocketMessage,
   };

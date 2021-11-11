@@ -18,7 +18,7 @@ export const setWsSymbolChangeAction = (payload) => ({
   payload,
 });
 
-export const refreshWsAggregateAction = (payload) => ({
+export const refreshWsTradeAction = (payload) => ({
   type: types.WS_AGGREGATE,
   payload,
 });

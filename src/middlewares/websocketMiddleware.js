@@ -1,5 +1,5 @@
 import {
-  refreshWsAggregateAction,
+  refreshWsTradeAction,
   refreshWsDepthAction,
   setWsStatusReadyAction,
 } from 'actionCreators/websocketAction';
@@ -17,7 +17,7 @@ const onConnected = (store) => () => {
 const handleReceivedMessage = (store) => (msg) => {
   if (msg.id) return;
   if (msg.e === 'aggTrade') {
-    store.dispatch(refreshWsAggregateAction(msg));
+    store.dispatch(refreshWsTradeAction(msg));
   } else {
     store.dispatch(refreshWsDepthAction(msg));
   }

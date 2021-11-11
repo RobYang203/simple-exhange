@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import DepthTitle from './DepthTitle';
 import DepthItem from './DepthItem';
+import cls from 'classnames';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -23,6 +25,9 @@ const useStyles = makeStyles((theme) => {
       position: 'absolute',
       right: 0,
     },
+    markTop: {
+      bottom: 0,
+    },
     dividerMark: {
       position: 'relative',
     },
@@ -31,6 +36,8 @@ const useStyles = makeStyles((theme) => {
 
 function DepthBox() {
   const classes = useStyles();
+  const { asks, bids } = useSelector(({ market }) => market.depths);
+
   return (
     <Card>
       <CardHeader title='Depth' />
@@ -39,17 +46,21 @@ function DepthBox() {
           <DepthTitle leftText='Price' rightText='Quantity' />
           <Divider />
           <List className={classes.list}>
-            <DepthItem price='Price' quantity='Quantity' />
-            <DepthItem price='Price' quantity='Quantity' />
+            {asks.map((ask) => {
+              return <DepthItem price={ask[0]} quantity={ask[1]} />;
+            })}
           </List>
           <div className={classes.dividerMark}>
-            <Typography className={classes.mark}>Ask</Typography>
+            <Typography className={cls(classes.mark, classes.markTop)}>
+              Ask
+            </Typography>
             <Divider />
             <Typography className={classes.mark}>Bid</Typography>
           </div>
           <List className={classes.list}>
-            <DepthItem price='Price' quantity='Quantity' />
-            <DepthItem price='Price' quantity='Quantity' />
+            {bids.map((bid) => {
+              return <DepthItem price={bid[0]} quantity={bid[1]} />;
+            })}
           </List>
         </Grid>
       </CardContent>

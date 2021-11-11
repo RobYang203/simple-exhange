@@ -5,6 +5,6 @@ export const settingState = {
 export const marketState = {
   symbols: [],
   currentSymbol: null,
-  aggTrade: [],
-  depth: [],
+  trades: [],
+  depths: null,
 };
