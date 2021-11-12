@@ -36,7 +36,6 @@ function TradeBox() {
               return (
                 <TradeItem
                   key={trade.a}
-                  type={!trade.m ? 'buy' : 'sell'}
                   price={trade.p}
                   time={format(new Date(trade.T), 'hh:mm:ss')}
                   quantity={trade.q}

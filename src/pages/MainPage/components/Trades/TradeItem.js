@@ -7,16 +7,10 @@ const useStyles = makeStyles(() => {
     root: {
       padding: 5,
     },
-    buy: {
-      color: '#f6465d',
-    },
-    sell: {
-      color: '#10cb80',
-    },
   };
 });
 
-function TradeItem({ time, price, quantity, type }) {
+function TradeItem({ time, price, quantity }) {
   const classes = useStyles();
 
   return (
@@ -26,7 +20,7 @@ function TradeItem({ time, price, quantity, type }) {
           <Typography>{time}</Typography>
         </Grid>
         <Grid item>
-          <Typography className={classes[type]}>{price}</Typography>
+          <Typography>{price}</Typography>
         </Grid>
         <Grid item>
           <Typography>{quantity}</Typography>
@@ -37,7 +31,6 @@ function TradeItem({ time, price, quantity, type }) {
 }
 
 TradeItem.propTypes = {
-  type: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   quantity: PropTypes.string.isRequired,
