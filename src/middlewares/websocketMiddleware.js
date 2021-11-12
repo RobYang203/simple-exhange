@@ -6,6 +6,12 @@ import {
 import createWebsocketControl, { sendWebsocketMessage } from 'ws/control';
 import actionTypes from 'constants/actionTypes';
 
+let _delayMS = 300;
+
+let lastMS = 0;
+
+const dataBuffer = {};
+
 const wsActionPrefix = /^WS_/;
 
 const messageId = 1;
@@ -16,11 +22,29 @@ const onConnected = (store) => () => {
 
 const handleReceivedMessage = (store) => (msg) => {
   if (msg.id) return;
-  if (msg.e === 'aggTrade') {
-    store.dispatch(insertWsTradeAction(msg));
-  } else {
-    store.dispatch(refreshWsDepthAction(msg));
+
+  const receivedMS = new Date().getTime();
+
+  const event = msg.e ?? 'depth';
+  dataBuffer[event] = msg;
+
+  if (receivedMS - lastMS < _delayMS) {
+    return;
   }
+
+  const { aggTrade, depth } = dataBuffer;
+
+  if (aggTrade) {
+    store.dispatch(insertWsTradeAction(dataBuffer.aggTrade));
+    delete dataBuffer.aggTrade;
+  }
+
+  if (depth) {
+    store.dispatch(refreshWsDepthAction(dataBuffer.depth));
+    delete dataBuffer.depth;
+  }
+
+  lastMS = receivedMS;
 };
 
 const createSubscribeSymbolMessage = (symbol) => {
