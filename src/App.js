@@ -3,9 +3,7 @@ import { getExchangeInfoAction } from 'actionCreators/marketActions';
 import LoadingMask from 'components/LoadingMask';
 import useActionDispatch from 'hooks/useActionDispatch';
 import MainLayout from 'layouts/MainLayout';
-import HistoryPage from 'pages/HistoryPage';
 import MainPage from 'pages/MainPage';
-import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 function App() {

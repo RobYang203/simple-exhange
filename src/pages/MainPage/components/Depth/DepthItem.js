@@ -7,17 +7,23 @@ const useStyles = makeStyles(() => {
     root: {
       padding: 5,
     },
+    ask: {
+      color: '#f6465d',
+    },
+    bid: {
+      color: '#10cb80',
+    },
   };
 });
 
-function DepthItem({ price, quantity }) {
+function DepthItem({ price, quantity, type }) {
   const classes = useStyles();
 
   return (
     <ListItem className={classes.root}>
       <Grid container justify='space-between'>
         <Grid item>
-          <Typography>{price}</Typography>
+          <Typography className={classes[type]}>{price}</Typography>
         </Grid>
         <Grid item>
           <Typography>{quantity}</Typography>
@@ -28,8 +34,9 @@ function DepthItem({ price, quantity }) {
 }
 
 DepthItem.propTypes = {
-  price: PropTypes.number.isRequired,
-  quantity: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
 };
 
 export default DepthItem;

@@ -1,17 +1,10 @@
-import {
-  IconButton,
-  makeStyles,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { makeStyles, TextField, Typography } from '@material-ui/core';
 import { AppBar, Toolbar } from '@material-ui/core';
-import HistoryIcon from '@material-ui/icons/History';
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Autocomplete, {
   createFilterOptions,
 } from '@material-ui/lab/Autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
 import useActionDispatch from 'hooks/useActionDispatch';
 import { setWsSymbolChangeAction } from 'actionCreators/websocketAction';
 
@@ -38,7 +31,6 @@ const filter = createFilterOptions();
 
 function TopBar() {
   const classes = useStyles();
-  const [searchText, setSearchText] = useState(null);
 
   const { currentSymbol, symbols } = useSelector(({ market }) => {
     const { currentSymbol, symbols } = market;
@@ -72,7 +64,7 @@ function TopBar() {
             autoHighlight
             options={symbols}
             getOptionLabel={(option) => {
-              if (typeof option === 'string') {
+              if (!option) {
                 return option;
               }
 

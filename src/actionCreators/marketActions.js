@@ -13,3 +13,7 @@ export const getExchangeInfoErrorAction = (payload) => ({
   type: types.GET_EXCHANGE_INFO_ERROR,
   payload,
 });
+
+export const initialMarketAction = () => ({
+  type: types.INITIAL_MARKET,
+});

@@ -49,7 +49,12 @@ function DepthBox() {
           <List className={classes.list}>
             {orderBy(asks, 0, 'desc').map((ask) => {
               return (
-                <DepthItem key={ask[0]} price={ask[0]} quantity={ask[1]} />
+                <DepthItem
+                  key={ask[0]}
+                  price={ask[0]}
+                  quantity={ask[1]}
+                  type='ask'
+                />
               );
             })}
           </List>
@@ -63,7 +68,12 @@ function DepthBox() {
           <List className={classes.list}>
             {orderBy(bids, 0, 'desc').map((bid) => {
               return (
-                <DepthItem key={bid[0]} price={bid[0]} quantity={bid[1]} />
+                <DepthItem
+                  key={bid[0]}
+                  price={bid[0]}
+                  quantity={bid[1]}
+                  type='bid'
+                />
               );
             })}
           </List>

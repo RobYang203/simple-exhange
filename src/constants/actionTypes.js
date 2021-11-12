@@ -1,6 +1,10 @@
 import constants from 'flux-constants';
 
-export const syncActionTypes = ['START_FETCHING', 'STOP_FETCHING'];
+export const syncActionTypes = [
+  'START_FETCHING',
+  'STOP_FETCHING',
+  'INITIAL_MARKET',
+];
 
 export const basicAsyncActionTypes = ['GET_EXCHANGE_INFO'];
 

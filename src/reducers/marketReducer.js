@@ -21,7 +21,11 @@ export default function routeReducer(market = marketState, { type, payload }) {
     case types.GET_EXCHANGE_INFO_SUCCESS:
       return { ...market, symbols: [...payload] };
     case types.WS_SYMBOL_CHANGE:
-      return { ...market, currentSymbol: { ...payload } };
+      return {
+        ...marketState,
+        symbols: market.symbols,
+        currentSymbol: { ...payload },
+      };
     case types.WS_DEPTH:
       return { ...market, depths: { ...payload } };
     case types.WS_INSERT_TRADE:
